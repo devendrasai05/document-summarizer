@@ -1,11 +1,23 @@
 # DocuLens AI – Executive Document Synthesis Suite
 
-**Live Production Deployment:** [https://documind-five-kappa.vercel.app](https://documind-five-kappa.vercel.app)  
-**GitHub Repository:** [https://github.com/devendrasai05/document-summarizer](https://github.com/devendrasai05/document-summarizer)
+<div align="center">
 
-**DocuLens AI** is an enterprise-grade, full-stack document intelligence platform built for automated multi-page extraction, executive summarization, key findings matrices, and interactive action roadmaps.
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Visit%20Website-6366F1?style=for-the-badge)](https://documind-five-kappa.vercel.app)
+[![GitHub Repo](https://img.shields.io/badge/GitHub-Source%20Code-181717?style=for-the-badge&logo=github)](https://github.com/devendrasai05/document-summarizer)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-000000?style=for-the-badge&logo=vercel)](https://documind-five-kappa.vercel.app)
+
+### 🌐 [**Click here to open the Live Application →**](https://documind-five-kappa.vercel.app)
+
+> **No setup required.** The app runs fully in the browser. Click the link above to see it live instantly.
+
+</div>
 
 ---
+
+**DocuLens AI** is an enterprise-grade, full-stack AI document intelligence platform built for automated multi-page text extraction, executive summarization, key findings isolation, and interactive action roadmaps — deployed live on Vercel with a Groq LLaMA 3.3 serverless backend.
+
+---
+
 
 ## 🌟 Studio Architecture & Capabilities
 
