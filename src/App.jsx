@@ -9,7 +9,22 @@ import { extractTextFromPdf } from './services/pdfService';
 import { extractTextFromImage } from './services/ocrService';
 import { generateSummary } from './services/summaryService';
 import { isPdfFile, isImageFile } from './utils/fileUtils';
-import { Sparkles, ArrowRight, ShieldCheck, Zap, Lock, BookOpen, Layers, CheckCircle } from 'lucide-react';
+import { SAMPLE_DOCUMENTS } from './utils/sampleDocuments';
+import {
+  Sparkles,
+  ArrowRight,
+  ShieldCheck,
+  Zap,
+  Lock,
+  FileSearch,
+  BookOpen,
+  ListChecks,
+  Compass,
+  Lightbulb,
+  Cpu,
+  Layers,
+  CheckCircle2
+} from 'lucide-react';
 
 export default function App() {
   const [file, setFile] = useState(null);
@@ -32,7 +47,6 @@ export default function App() {
   };
 
   const handleSelectSample = (sampleDoc) => {
-    // Create mock File representation for sample demo
     const mockFile = new File([sampleDoc.text], `${sampleDoc.id}.txt`, { type: 'text/plain' });
     mockFile.sample = true;
     mockFile.displayName = sampleDoc.title;
@@ -61,7 +75,7 @@ export default function App() {
     setErrorMessage(null);
     setResult(null);
     setProcessingStageIndex(0);
-    setProcessingMessage('Preparing document for extraction...');
+    setProcessingMessage('Preparing document payload & security sandbox...');
     setProcessingPercentage(5);
 
     let extractedText = '';
@@ -69,22 +83,20 @@ export default function App() {
 
     try {
       if (file.sample && file.sampleText) {
-        // Direct extraction from sample document
         setProcessingStageIndex(1);
-        setProcessingMessage('Parsing sample document...');
+        setProcessingMessage('Parsing sample document streams...');
         setProcessingPercentage(40);
-        await new Promise((res) => setTimeout(res, 400));
+        await new Promise((res) => setTimeout(res, 350));
         extractedText = file.sampleText;
         pageCount = file.pageCount || 2;
       } else {
         const isPdf = isPdfFile(file);
         const isImg = isImageFile(file);
 
-        // STAGE 1: File Reading & Text Extraction / OCR
         setProcessingStageIndex(1);
 
         if (isPdf) {
-          setProcessingMessage('Reading PDF pages & extracting structured text...');
+          setProcessingMessage('Parsing multi-page PDF & extracting structured layout...');
           const pdfResult = await extractTextFromPdf(file, (prog) => {
             setProcessingPercentage(Math.max(10, Math.min(60, prog.percentage)));
             if (prog.message) setProcessingMessage(prog.message);
@@ -92,7 +104,7 @@ export default function App() {
           extractedText = pdfResult.text;
           pageCount = pdfResult.pageCount;
         } else if (isImg) {
-          setProcessingMessage('Running OCR on image to detect typography...');
+          setProcessingMessage('Running WebAssembly OCR to extract typography...');
           const ocrResult = await extractTextFromImage(file, (prog) => {
             setProcessingPercentage(Math.max(10, Math.min(60, prog.percentage)));
             if (prog.message) setProcessingMessage(prog.message);
@@ -109,23 +121,23 @@ export default function App() {
 
       setExtractedRawText(extractedText);
 
-      // STAGE 2: Analyzing Content Structure
+      // STAGE 2: Structural Analysis
       setProcessingStageIndex(2);
-      setProcessingMessage('Analyzing document structure and vocabulary...');
+      setProcessingMessage('Mapping lexical hierarchy & semantic vectors...');
       setProcessingPercentage(65);
-      await new Promise((res) => setTimeout(res, 350));
+      await new Promise((res) => setTimeout(res, 300));
 
-      // STAGE 3: AI Generation via Groq API
+      // STAGE 3: Groq AI Synthesis
       setProcessingStageIndex(3);
-      setProcessingMessage(`Generating ${summaryLength.toUpperCase()} summary with AI...`);
+      setProcessingMessage(`Synthesizing ${summaryLength.toUpperCase()} executive summary via Groq...`);
       setProcessingPercentage(75);
 
       const summaryResponse = await generateSummary(extractedText, summaryLength);
       setProcessingPercentage(95);
 
-      // STAGE 4: Finalizing
+      // STAGE 4: Output Validation
       setProcessingStageIndex(4);
-      setProcessingMessage('Structuring insights and recommendations...');
+      setProcessingMessage('Validating JSON schema & structuring intelligence deck...');
       setProcessingPercentage(100);
       await new Promise((res) => setTimeout(res, 250));
 
@@ -140,14 +152,13 @@ export default function App() {
 
       setResult(summaryResponse);
     } catch (err) {
-      console.error('Document analysis failure:', err);
+      console.error('DocuLens analysis failure:', err);
       setErrorMessage(err.message || 'An unexpected error occurred while analyzing the document.');
     } finally {
       setIsProcessing(false);
     }
   };
 
-  // Re-generate summary when depth is toggled directly on results screen
   const handleLengthChangeFromResults = async (newLength) => {
     if (newLength === summaryLength || !extractedRawText || isReanalyzing) return;
 
@@ -178,55 +189,38 @@ export default function App() {
   };
 
   return (
-    <div className="app-layout">
-      {/* Top Navigation / Header */}
+    <div className="doculens-app">
+      {/* Top Application Header */}
       <Header />
 
-      <main className="main-content">
-        <div className="content-container">
-          {/* Main Hero Banner */}
-          {!result && (
-            <div className="hero-intro-section">
-              <div className="hero-pill">
-                <Sparkles size={14} className="hero-pill-icon" />
-                <span>Next-Gen Document Intelligence 2.0</span>
-              </div>
-              <h1 className="main-headline">
-                Transform Complex Documents into <span className="gradient-text">Actionable Executive Intelligence</span>
-              </h1>
-              <p className="main-subheadline">
-                Upload research papers, PDF reports, or image scans to extract typography, synthesize multi-level summaries,
-                isolate critical takeaways, and receive targeted improvement roadmaps.
-              </p>
-            </div>
-          )}
-
-          {/* Error Alert Display */}
+      {/* Main Studio Workspace */}
+      <main className="studio-workspace">
+        <div className="studio-canvas">
+          {/* Global Alert Notification */}
           <ErrorAlert
             message={errorMessage}
             onDismiss={() => setErrorMessage(null)}
             onRetry={file ? handleStartAnalysis : null}
           />
 
-          {/* If Result exists, show Upgraded Results Dashboard */}
-          {result ? (
-            <SummaryResults
-              result={result}
-              fileMeta={fileMeta}
-              selectedLength={summaryLength}
-              extractedText={extractedRawText}
-              onLengthChange={handleLengthChangeFromResults}
-              onReset={handleReset}
-              isReanalyzing={isReanalyzing}
-            />
-          ) : (
-            <div className="workflow-card">
-              {/* Step 1: Upload */}
-              <div className="step-block">
-                <div className="step-indicator-row">
-                  <div className="step-num-badge">1</div>
-                  <h2 className="step-title">Upload Document or Image</h2>
+          {/* Dual-Pane Studio Grid */}
+          <div className={`studio-split-grid ${result ? 'has-results' : ''}`}>
+            {/* =========================================================
+                LEFT PANE: Control Center & Document Configuration
+               ========================================================= */}
+            <aside className="studio-left-pane no-print">
+              <div className="pane-card-frame">
+                <div className="pane-header-row">
+                  <div className="pane-title-group">
+                    <span className="pane-step-counter">1</span>
+                    <h2 className="pane-title">Document Ingestion</h2>
+                  </div>
+                  <span className="pane-secure-tag">
+                    <Lock size={11} /> Sandboxed
+                  </span>
                 </div>
+
+                {/* Upload Zone */}
                 <UploadArea
                   selectedFile={file}
                   onFileSelect={handleFileSelect}
@@ -234,76 +228,157 @@ export default function App() {
                   onSelectSample={handleSelectSample}
                   disabled={isProcessing}
                 />
-              </div>
 
-              {/* Step 2: Summary Options */}
-              <div className="step-block">
-                <div className="step-indicator-row">
-                  <div className="step-num-badge">2</div>
-                  <h2 className="step-title">Select Analysis Depth</h2>
-                </div>
-                <SummaryOptions
-                  selectedLength={summaryLength}
-                  onChange={setSummaryLength}
-                  disabled={isProcessing}
-                />
-              </div>
-
-              {/* Step 3: Action Button or Processing State */}
-              <div className="step-action-zone">
-                {isProcessing ? (
-                  <ProcessingStatus
-                    currentStageIndex={processingStageIndex}
-                    statusMessage={processingMessage}
-                    percentage={processingPercentage}
+                {/* Depth Selection */}
+                <div className="pane-depth-section">
+                  <div className="pane-title-group">
+                    <span className="pane-step-counter">2</span>
+                    <h2 className="pane-title">Synthesis Depth</h2>
+                  </div>
+                  <SummaryOptions
+                    selectedLength={summaryLength}
+                    onChange={setSummaryLength}
+                    disabled={isProcessing}
                   />
-                ) : (
+                </div>
+
+                {/* Action CTA */}
+                <div className="pane-action-box">
                   <button
                     type="button"
-                    className="analyze-cta-btn"
+                    className="studio-cta-btn"
                     disabled={!file || isProcessing}
                     onClick={handleStartAnalysis}
                   >
-                    <Sparkles size={20} className="cta-icon" />
-                    <span>Synthesize Document with AI</span>
-                    <ArrowRight size={18} className="cta-arrow" />
+                    <Sparkles size={18} className="btn-sparkle-svg" />
+                    <span>{result ? 'Re-Synthesize Document' : 'Synthesize with AI'}</span>
+                    <ArrowRight size={16} className="btn-arrow-svg" />
                   </button>
-                )}
-              </div>
+                </div>
 
-              {/* Security & Feature Guarantees */}
-              <div className="trust-footer-row">
-                <div className="trust-item">
-                  <ShieldCheck size={16} />
-                  <span>Private In-Browser PDF & OCR Extraction</span>
-                </div>
-                <div className="trust-item">
-                  <Lock size={16} />
-                  <span>Server-Side Isolated Security</span>
-                </div>
-                <div className="trust-item">
-                  <Zap size={16} />
-                  <span>Sub-Second Groq LLaMA Inference</span>
+                {/* Trust Metrics */}
+                <div className="pane-trust-strip">
+                  <div className="trust-cell">
+                    <ShieldCheck size={14} className="text-emerald" />
+                    <span>In-Browser Extraction</span>
+                  </div>
+                  <div className="trust-cell">
+                    <Zap size={14} className="text-amber" />
+                    <span>Groq LLaMA 3.3</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          )}
+            </aside>
+
+            {/* =========================================================
+                RIGHT PANE: Live Executive Stage / Synthesis Deck
+               ========================================================= */}
+            <section className="studio-right-pane">
+              {isProcessing ? (
+                <ProcessingStatus
+                  currentStageIndex={processingStageIndex}
+                  statusMessage={processingMessage}
+                  percentage={processingPercentage}
+                />
+              ) : result ? (
+                <SummaryResults
+                  result={result}
+                  fileMeta={fileMeta}
+                  selectedLength={summaryLength}
+                  extractedText={extractedRawText}
+                  onLengthChange={handleLengthChangeFromResults}
+                  onReset={handleReset}
+                  isReanalyzing={isReanalyzing}
+                />
+              ) : (
+                /* Empty Stage Feature Showcase */
+                <div className="empty-stage-card">
+                  <div className="empty-stage-hero">
+                    <div className="hero-emblem-box">
+                      <FileSearch size={38} className="hero-emblem-icon" />
+                      <div className="hero-emblem-ring"></div>
+                    </div>
+
+                    <h3 className="empty-stage-title">
+                      Welcome to <span className="brand-highlight">DocuLens AI</span> Studio
+                    </h3>
+
+                    <p className="empty-stage-sub">
+                      Upload a PDF report, research paper, or image scan on the left to extract text, synthesize
+                      executive briefs, isolate key findings, and build actionable next steps.
+                    </p>
+                  </div>
+
+                  {/* Capability Grid */}
+                  <div className="stage-capabilities-grid">
+                    <div className="cap-feature-card">
+                      <div className="cap-feat-icon icon-blue">
+                        <BookOpen size={18} />
+                      </div>
+                      <h4 className="cap-feat-title">Smart AI Summaries</h4>
+                      <p className="cap-feat-desc">
+                        Synthesizes complex multi-page documents into digestible executive narratives.
+                      </p>
+                    </div>
+
+                    <div className="cap-feature-card">
+                      <div className="cap-feat-icon icon-indigo">
+                        <ListChecks size={18} />
+                      </div>
+                      <h4 className="cap-feat-title">Key Findings Matrix</h4>
+                      <p className="cap-feat-desc">
+                        Isolates vital facts, quantitative metrics, and core qualitative takeaways.
+                      </p>
+                    </div>
+
+                    <div className="cap-feature-card">
+                      <div className="cap-feat-icon icon-violet">
+                        <Compass size={18} />
+                      </div>
+                      <h4 className="cap-feat-title">Strategic Pillars</h4>
+                      <p className="cap-feat-desc">
+                        Identifies overarching themes, operational models, and strategic focus areas.
+                      </p>
+                    </div>
+
+                    <div className="cap-feature-card">
+                      <div className="cap-feat-icon icon-amber">
+                        <Lightbulb size={18} />
+                      </div>
+                      <h4 className="cap-feat-title">Interactive Action Roadmap</h4>
+                      <p className="cap-feat-desc">
+                        Generates a structured checklist of next steps with clickable completion states.
+                      </p>
+                    </div>
+                  </div>
+
+                  {/* Instant Demo Prompt */}
+                  <div className="empty-stage-prompt-bar">
+                    <Sparkles size={15} className="prompt-spark" />
+                    <span>Tip: Click any <strong>Instant Demo Preset</strong> on the left to test the AI pipeline immediately.</span>
+                  </div>
+                </div>
+              )}
+            </section>
+          </div>
         </div>
       </main>
 
-      <footer className="footer-bar no-print">
-        <div className="footer-content">
-          <p>© {new Date().getFullYear()} BriefCraft AI – High-Performance Document Synthesis Platform</p>
-          <div className="footer-tech-stack">
-            <span>React 18</span>
-            <span className="dot">•</span>
-            <span>Vite</span>
-            <span className="dot">•</span>
-            <span>PDF.js</span>
-            <span className="dot">•</span>
-            <span>Tesseract OCR</span>
-            <span className="dot">•</span>
-            <span>Groq LLaMA 3.3</span>
+      {/* Clean Studio Footer */}
+      <footer className="studio-footer no-print">
+        <div className="footer-container">
+          <div className="footer-left">
+            <span className="footer-brand">DocuLens AI</span>
+            <span className="footer-dot">•</span>
+            <span className="footer-copyright">© {new Date().getFullYear()} Executive Intelligence Platform</span>
+          </div>
+
+          <div className="footer-right-tags">
+            <span className="tag-pill">Vite 6</span>
+            <span className="tag-pill">React 18</span>
+            <span className="tag-pill">pdfjs-dist</span>
+            <span className="tag-pill">Tesseract OCR</span>
+            <span className="tag-pill">Groq LLaMA 3.3</span>
           </div>
         </div>
       </footer>

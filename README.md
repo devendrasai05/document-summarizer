@@ -1,32 +1,28 @@
-# BriefCraft AI – Intelligent Document Synthesis Platform
+# DocuLens AI – Executive Document Synthesis Suite
 
 **Live Production Deployment:** [https://documind-five-kappa.vercel.app](https://documind-five-kappa.vercel.app)  
 **GitHub Repository:** [https://github.com/devendrasai05/document-summarizer](https://github.com/devendrasai05/document-summarizer)
 
-**BriefCraft AI** is an ultra-modern, production-grade AI document intelligence platform built for automated multi-page extraction, executive summarization, key point isolation, and actionable improvement recommendations.
+**DocuLens AI** is an enterprise-grade, full-stack document intelligence platform built for automated multi-page extraction, executive summarization, key findings matrices, and interactive action roadmaps.
 
 ---
 
-## 🌟 Key Features & UX Innovations
+## 🌟 Studio Architecture & Capabilities
 
-- **Rebranded & Polished Experience**: Clean **BriefCraft AI** SaaS interface with micro-interactions, ambient glow aesthetics, and fully responsive layout.
-- **Instant Demo Mode**: Pre-loaded executive whitepaper and financial report samples for one-click live evaluation.
-- **Audio Voice Reader (Text-to-Speech)**: Integrated in-browser speech synthesis to listen to executive summaries aloud with soundwave animation.
-- **Multi-Format Document Ingestion**:
-  - Drag-and-drop and file browser for PDF (`.pdf`), JPEG (`.jpg`, `.jpeg`), and PNG (`.png`).
-  - Image thumbnails and validation alerts for corrupt files or files exceeding 10 MB.
-- **In-Browser Text Extraction & OCR**:
-  - **PDFs**: Client-side extraction via `pdfjs-dist` preserving coordinate spacing and page counts.
-  - **Images**: In-browser OCR via `Tesseract.js` with real-time recognition progress tracking.
-- **Dynamic Analysis Depth Switcher**:
-  - Select between **Short** (concise overview), **Medium** (balanced executive brief), and **Detailed** (in-depth deep dive).
-  - Re-generate summary depths instantly from the results dashboard without re-uploading!
-- **Interactive Action Items Checklist**: Check off recommendations as you implement them with visual strikethrough states.
+- **Dual-Pane Studio Workspace**:
+  - **Left Panel (Control Center)**: Interactive drag-and-drop ingestion, instant demo presets, 3-mode depth selector (Short, Medium, Detailed), and real-time security sandboxing.
+  - **Right Panel (Executive Intelligence Stage)**: Live telemetry pipeline during processing, executive KPI metrics (reading time reduction percentage, critical findings count, strategic themes, action items), voice reader, findings matrix, and interactive checklist roadmap.
+- **Instant Demo Presets**: One-click evaluation with pre-loaded AI whitepaper and fintech earnings reports.
+- **Audio Voice Reader**: In-browser speech synthesis to listen to executive summaries aloud with soundwave pulse.
+- **High-Fidelity Text Extraction & OCR**:
+  - **PDFs**: Client-side extraction via `pdfjs-dist` preserving spatial line breaks and page counts.
+  - **Images**: In-browser OCR via `Tesseract.js` WebAssembly engine with live percentage tracking.
+- **Dynamic Analysis Depth Switcher**: Change summary depths on the fly directly from the results deck without re-uploading.
+- **Interactive Action Roadmap**: Clickable checkboxes with strike-through states for tracking implementation items.
 - **Multi-Format Export**:
-  - One-click copy analysis to clipboard.
-  - One-click Markdown (`.md`) report download.
-  - Print / Save as PDF (`@media print` clean executive stylesheet).
-  - Raw extracted text drawer with character counter and copy tool.
+  - Markdown report export (`.md`)
+  - Clean executive PDF / Print layout (`@media print` stylesheet)
+  - Full clipboard copy & raw extracted text inspection drawer.
 
 - **High-Fidelity Text Extraction & OCR**:
   - **PDFs**: Client-side multi-page text extraction using `pdfjs-dist` with coordinate-aware line break reconstruction and page counting.

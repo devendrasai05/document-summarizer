@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { UploadCloud, FileText, Image as ImageIcon, X, AlertCircle, CheckCircle2, Sparkles, Zap } from 'lucide-react';
+import { UploadCloud, FileText, Image as ImageIcon, X, AlertCircle, CheckCircle2, Sparkles, Zap, ArrowUpRight } from 'lucide-react';
 import { formatBytes, isPdfFile, isImageFile, validateFile } from '../utils/fileUtils';
 import { SAMPLE_DOCUMENTS } from '../utils/sampleDocuments';
 
@@ -26,7 +26,6 @@ export default function UploadArea({
 
     setValidationError(null);
 
-    // Create thumbnail preview if image
     if (isImageFile(file)) {
       const reader = new FileReader();
       reader.onload = (e) => setImagePreviewUrl(e.target.result);
@@ -86,7 +85,7 @@ export default function UploadArea({
   };
 
   return (
-    <div className="upload-section">
+    <div className="upload-control-block">
       <input
         ref={fileInputRef}
         type="file"
@@ -97,9 +96,10 @@ export default function UploadArea({
       />
 
       {!selectedFile ? (
-        <div className="upload-flow-wrapper">
+        <div className="upload-interactive-wrapper">
+          {/* Main Dropzone Box */}
           <div
-            className={`dropzone-container ${isDragOver ? 'drag-over' : ''} ${disabled ? 'disabled' : ''}`}
+            className={`studio-dropzone ${isDragOver ? 'drag-over' : ''} ${disabled ? 'disabled' : ''}`}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
             onDrop={handleDrop}
@@ -112,58 +112,57 @@ export default function UploadArea({
                 handleBoxClick();
               }
             }}
-            aria-label="Upload document drag and drop area"
+            aria-label="Upload document area"
           >
-            <div className="upload-glow-backdrop"></div>
+            <div className="dropzone-ambient-glow"></div>
             
-            <div className="upload-icon-wrapper">
-              <UploadCloud className="upload-icon" size={36} />
-              <div className="upload-spark-dot"></div>
+            <div className="dropzone-icon-box">
+              <UploadCloud className="dropzone-svg-icon" size={32} />
+              <div className="dropzone-dot"></div>
             </div>
 
-            <div className="upload-text-content">
-              <h3 className="upload-title">
-                <span className="upload-highlight">Click to browse</span> or drop your document here
-              </h3>
-              <p className="upload-subtitle">
-                AI parses PDF documents, technical papers, contracts, invoices, and high-res image scans
+            <div className="dropzone-text-group">
+              <h4 className="dropzone-headline">
+                <span className="dropzone-action-text">Upload Document</span> or drag & drop
+              </h4>
+              <p className="dropzone-sub">
+                PDF reports, whitepapers, contracts, invoices & high-res image scans
               </p>
             </div>
 
-            <div className="file-badges-row">
-              <span className="file-type-pill">
-                <FileText size={13} className="pill-pdf-icon" /> PDF Document
+            <div className="dropzone-format-tags">
+              <span className="format-tag tag-pdf">
+                <FileText size={12} /> PDF
               </span>
-              <span className="file-type-pill">
-                <ImageIcon size={13} className="pill-img-icon" /> JPG, PNG Scan
+              <span className="format-tag tag-img">
+                <ImageIcon size={12} /> JPG / PNG
               </span>
-              <span className="file-limit-pill">Up to 10 MB</span>
+              <span className="format-tag tag-limit">Max 10MB</span>
             </div>
           </div>
 
-          {/* Quick Sample Document Selector */}
+          {/* Quick Demo Document Presets */}
           {onSelectSample && (
-            <div className="sample-docs-panel">
-              <div className="sample-docs-header">
-                <Sparkles size={14} className="sample-sparkle" />
-                <span>Or evaluate instantly with sample documents:</span>
+            <div className="quick-presets-box">
+              <div className="presets-header">
+                <Sparkles size={13} className="presets-sparkle-icon" />
+                <span>Instant Demo Presets:</span>
               </div>
-              <div className="sample-docs-grid">
+              <div className="presets-button-grid">
                 {SAMPLE_DOCUMENTS.map((doc) => (
                   <button
                     key={doc.id}
                     type="button"
-                    className="sample-doc-card"
+                    className="preset-pill-btn"
                     onClick={() => onSelectSample(doc)}
                     disabled={disabled}
+                    title={doc.subtitle}
                   >
-                    <div className="sample-doc-icon-box">
-                      <Zap size={14} />
+                    <div className="preset-pill-left">
+                      <Zap size={13} className="preset-zap" />
+                      <span className="preset-title">{doc.title}</span>
                     </div>
-                    <div className="sample-doc-text">
-                      <span className="sample-doc-title">{doc.title}</span>
-                      <span className="sample-doc-sub">{doc.subtitle}</span>
-                    </div>
+                    <ArrowUpRight size={13} className="preset-arrow" />
                   </button>
                 ))}
               </div>
@@ -171,37 +170,38 @@ export default function UploadArea({
           )}
         </div>
       ) : (
-        <div className="selected-file-card">
-          <div className="file-info-group">
+        <div className="active-document-card">
+          <div className="active-doc-main">
             {imagePreviewUrl ? (
-              <div className="file-thumbnail-preview">
-                <img src={imagePreviewUrl} alt="Document preview" />
+              <div className="active-doc-thumb">
+                <img src={imagePreviewUrl} alt="Thumbnail preview" />
               </div>
             ) : (
-              <div className={`file-icon-box ${isPdfFile(selectedFile) ? 'pdf-type' : 'img-type'}`}>
-                {isPdfFile(selectedFile) ? <FileText size={26} /> : <ImageIcon size={26} />}
+              <div className={`active-doc-icon-badge ${isPdfFile(selectedFile) ? 'pdf-badge' : 'img-badge'}`}>
+                {isPdfFile(selectedFile) ? <FileText size={24} /> : <ImageIcon size={24} />}
               </div>
             )}
 
-            <div className="file-meta">
-              <div className="file-name-row">
-                <span className="file-name" title={selectedFile.name}>
-                  {selectedFile.name}
+            <div className="active-doc-details">
+              <div className="active-doc-name-row">
+                <span className="active-doc-name" title={selectedFile.name}>
+                  {selectedFile.displayName || selectedFile.name}
                 </span>
-                <span className="file-status-badge">
-                  <CheckCircle2 size={13} /> Ready for AI Synthesis
+                <span className="active-doc-status">
+                  <CheckCircle2 size={12} /> Ready
                 </span>
               </div>
-              <div className="file-details-row">
-                <span className="file-size-text">{formatBytes(selectedFile.size)}</span>
-                <span className="dot-separator">•</span>
-                <span className="file-type-text">
+
+              <div className="active-doc-meta-row">
+                <span className="doc-meta-size">{formatBytes(selectedFile.size)}</span>
+                <span className="doc-meta-dot">•</span>
+                <span className="doc-meta-type">
                   {isPdfFile(selectedFile) ? 'PDF Document' : 'Image Scan'}
                 </span>
                 {selectedFile.sample && (
                   <>
-                    <span className="dot-separator">•</span>
-                    <span className="sample-tag">Sample Demo</span>
+                    <span className="doc-meta-dot">•</span>
+                    <span className="doc-meta-sample-badge">Sample Demo</span>
                   </>
                 )}
               </div>
@@ -211,20 +211,20 @@ export default function UploadArea({
           {!disabled && (
             <button
               type="button"
-              className="remove-file-button"
+              className="active-doc-remove-btn"
               onClick={handleRemove}
               title="Remove file"
               aria-label="Remove selected file"
             >
-              <X size={18} />
+              <X size={16} />
             </button>
           )}
         </div>
       )}
 
       {validationError && (
-        <div className="validation-error-alert" role="alert">
-          <AlertCircle size={16} className="error-icon" />
+        <div className="upload-validation-banner" role="alert">
+          <AlertCircle size={15} className="validation-svg" />
           <span>{validationError}</span>
         </div>
       )}

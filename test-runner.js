@@ -1,4 +1,5 @@
 import { formatBytes, validateFile, countWords, estimateReadingTime, isPdfFile, isImageFile } from './src/utils/fileUtils.js';
+import { REPORT_SECTION_TITLES } from './src/utils/reportHeadings.js';
 import summarizeHandler from './api/summarize.js';
 
 let passed = 0;
@@ -34,6 +35,11 @@ async function runTests() {
   assert(isImageFile({ name: 'photo.jpg', type: 'image/jpeg' }), 'isImageFile for JPEG');
   assert(isImageFile({ name: 'diagram.png', type: 'image/png' }), 'isImageFile for PNG');
   assert(!isImageFile({ name: 'data.csv', type: 'text/csv' }), 'isImageFile returns false for CSV');
+
+  assert(REPORT_SECTION_TITLES.summary === 'Summary', 'Summary heading matches assignment requirement');
+  assert(REPORT_SECTION_TITLES.keyPoints === 'Key Points', 'Key Points heading matches assignment requirement');
+  assert(REPORT_SECTION_TITLES.mainIdeas === 'Main Ideas', 'Main Ideas heading matches assignment requirement');
+  assert(REPORT_SECTION_TITLES.suggestions === 'Improvement Suggestions', 'Improvement Suggestions heading matches assignment requirement');
 
   // Test validateFile
   const validPdf = { name: 'annual_report.pdf', type: 'application/pdf', size: 2 * 1024 * 1024 };
