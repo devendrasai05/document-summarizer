@@ -27,7 +27,7 @@ import {
   Bookmark
 } from 'lucide-react';
 import { formatBytes, countWords, estimateReadingTime } from '../utils/fileUtils';
-import { REPORT_SECTION_TITLES } from '../utils/reportHeadings';
+
 
 export default function SummaryResults({
   result,
@@ -434,7 +434,7 @@ ${suggestions.map((sug, i) => `- [ ] **Action ${i + 1}:** ${sug}`).join('\n')}
                   <BookOpen size={18} />
                 </div>
                 <div>
-                  <h3 id="summary-title" className="panel-title">{REPORT_SECTION_TITLES.summary}</h3>
+                  <h3 id="summary-title" className="panel-title">Smart Summary</h3>
                   <p className="panel-subtitle">Synthesized core narrative extracted by DocuLens AI</p>
                 </div>
               </div>
@@ -466,7 +466,7 @@ ${suggestions.map((sug, i) => `- [ ] **Action ${i + 1}:** ${sug}`).join('\n')}
                   <ListChecks size={18} />
                 </div>
                 <div>
-                  <h3 id="keypoints-title" className="panel-title">{REPORT_SECTION_TITLES.keyPoints}</h3>
+                  <h3 id="keypoints-title" className="panel-title">Key Points</h3>
                   <p className="panel-subtitle">Quantitative data points, metrics, and qualitative discoveries</p>
                 </div>
               </div>
@@ -505,7 +505,7 @@ ${suggestions.map((sug, i) => `- [ ] **Action ${i + 1}:** ${sug}`).join('\n')}
                   <Compass size={18} />
                 </div>
                 <div>
-                  <h3 id="mainideas-title" className="panel-title">{REPORT_SECTION_TITLES.mainIdeas}</h3>
+                  <h3 id="mainideas-title" className="panel-title">Main Ideas</h3>
                   <p className="panel-subtitle">Underlying principles, operational dynamics, and domain focus areas</p>
                 </div>
               </div>
@@ -542,7 +542,7 @@ ${suggestions.map((sug, i) => `- [ ] **Action ${i + 1}:** ${sug}`).join('\n')}
                   <Lightbulb size={18} />
                 </div>
                 <div>
-                  <h3 id="suggestions-title" className="panel-title">{REPORT_SECTION_TITLES.suggestions}</h3>
+                  <h3 id="suggestions-title" className="panel-title">Improvement Suggestions</h3>
                   <p className="panel-subtitle">Interactive checklist: Click any item to acknowledge or complete</p>
                 </div>
               </div>
