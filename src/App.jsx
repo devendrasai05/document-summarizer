@@ -315,7 +315,7 @@ export default function App() {
                       <div className="cap-feat-icon icon-blue">
                         <BookOpen size={18} />
                       </div>
-                      <h4 className="cap-feat-title">Smart AI Summaries</h4>
+                      <h4 className="cap-feat-title">Smart Summary</h4>
                       <p className="cap-feat-desc">
                         Synthesizes complex multi-page documents into digestible executive narratives.
                       </p>
@@ -325,7 +325,7 @@ export default function App() {
                       <div className="cap-feat-icon icon-indigo">
                         <ListChecks size={18} />
                       </div>
-                      <h4 className="cap-feat-title">Key Findings Matrix</h4>
+                      <h4 className="cap-feat-title">Key Points</h4>
                       <p className="cap-feat-desc">
                         Isolates vital facts, quantitative metrics, and core qualitative takeaways.
                       </p>
@@ -335,7 +335,7 @@ export default function App() {
                       <div className="cap-feat-icon icon-violet">
                         <Compass size={18} />
                       </div>
-                      <h4 className="cap-feat-title">Strategic Pillars</h4>
+                      <h4 className="cap-feat-title">Main Ideas</h4>
                       <p className="cap-feat-desc">
                         Identifies overarching themes, operational models, and strategic focus areas.
                       </p>
@@ -345,7 +345,7 @@ export default function App() {
                       <div className="cap-feat-icon icon-amber">
                         <Lightbulb size={18} />
                       </div>
-                      <h4 className="cap-feat-title">Interactive Action Roadmap</h4>
+                      <h4 className="cap-feat-title">Improvement Suggestions</h4>
                       <p className="cap-feat-desc">
                         Generates a structured checklist of next steps with clickable completion states.
                       </p>
