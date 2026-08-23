@@ -1,20 +1,32 @@
-# DocuMind – AI Document Summary Assistant
+# BriefCraft AI – Intelligent Document Synthesis Platform
 
-**Live Production Deployment:** [https://documind-five-kappa.vercel.app](https://documind-five-kappa.vercel.app)
+**Live Production Deployment:** [https://documind-five-kappa.vercel.app](https://documind-five-kappa.vercel.app)  
+**GitHub Repository:** [https://github.com/devendrasai05/document-summarizer](https://github.com/devendrasai05/document-summarizer)
 
-**DocuMind** is a production-grade, full-stack AI document intelligence application built for automated document extraction, multi-level summarization, key point isolation, and actionable improvement recommendations.
-
-DocuMind supports both **PDF documents** (multi-page text extraction with layout awareness) and **Images** (JPG, JPEG, PNG OCR via Tesseract.js), followed by high-speed structured inference using isolated serverless LLM functions powered by Groq.
+**BriefCraft AI** is an ultra-modern, production-grade AI document intelligence platform built for automated multi-page extraction, executive summarization, key point isolation, and actionable improvement recommendations.
 
 ---
 
-## 🌟 Key Features
+## 🌟 Key Features & UX Innovations
 
-- **Multi-Format Document Upload**:
-  - Drag-and-drop & click-to-browse interface.
-  - Supports PDF (`.pdf`), JPEG (`.jpg`, `.jpeg`), and PNG (`.png`).
-  - Real-time client-side validation for file size (up to 10 MB), corrupt/empty files, and unsupported formats.
-  - Interactive file preview with instant removal.
+- **Rebranded & Polished Experience**: Clean **BriefCraft AI** SaaS interface with micro-interactions, ambient glow aesthetics, and fully responsive layout.
+- **Instant Demo Mode**: Pre-loaded executive whitepaper and financial report samples for one-click live evaluation.
+- **Audio Voice Reader (Text-to-Speech)**: Integrated in-browser speech synthesis to listen to executive summaries aloud with soundwave animation.
+- **Multi-Format Document Ingestion**:
+  - Drag-and-drop and file browser for PDF (`.pdf`), JPEG (`.jpg`, `.jpeg`), and PNG (`.png`).
+  - Image thumbnails and validation alerts for corrupt files or files exceeding 10 MB.
+- **In-Browser Text Extraction & OCR**:
+  - **PDFs**: Client-side extraction via `pdfjs-dist` preserving coordinate spacing and page counts.
+  - **Images**: In-browser OCR via `Tesseract.js` with real-time recognition progress tracking.
+- **Dynamic Analysis Depth Switcher**:
+  - Select between **Short** (concise overview), **Medium** (balanced executive brief), and **Detailed** (in-depth deep dive).
+  - Re-generate summary depths instantly from the results dashboard without re-uploading!
+- **Interactive Action Items Checklist**: Check off recommendations as you implement them with visual strikethrough states.
+- **Multi-Format Export**:
+  - One-click copy analysis to clipboard.
+  - One-click Markdown (`.md`) report download.
+  - Print / Save as PDF (`@media print` clean executive stylesheet).
+  - Raw extracted text drawer with character counter and copy tool.
 
 - **High-Fidelity Text Extraction & OCR**:
   - **PDFs**: Client-side multi-page text extraction using `pdfjs-dist` with coordinate-aware line break reconstruction and page counting.
